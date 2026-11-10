@@ -1,0 +1,82 @@
+# ============================================================
+#  构建产物：超过 GitHub 单文件 100 MiB 硬限制，绝不入库
+# ============================================================
+# 单文件自解压 exe ≈ 110.94 MB
+build/dist_single/
+# onedir 未打包目录 ≈ 285.91 MB
+build/dist_http/
+# ffmpeg.exe ≈ 105 MB
+build/ffmpeg/
+ffmpeg/
+
+# ---- 打包中间件 ----
+*.spec
+*.manifest
+*.toc
+*.pyz
+*.pkg
+payload*.bin
+payload*.zip
+Sfx.exe
+Sfx.pdb
+*.resources
+
+# ---- 通用构建输出 ----
+build/lib/
+build/dist/
+build/temp/
+build/__pycache__/
+out/
+artifacts/
+
+# ---- 原始程序与本地产物 ----
+YayaTu.exe
+YayaTu_patched.exe
+
+# ============================================================
+#  Python
+# ============================================================
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# ============================================================
+#  .NET / C#
+# ============================================================
+bin/
+obj/
+*.obj
+*.pdb
+*.ilk
+*.user
+*.suo
+.vs/
+
+# ============================================================
+#  编辑器 / 系统
+# ============================================================
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+Thumbs.db
+desktop.ini
+.DS_Store
+*.swp
+
+# ============================================================
+#  日志 / 临时
+# ============================================================
+*.log
+*.tmp
+*.bak
+temp/
+tmp/
+_notes/

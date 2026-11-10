@@ -1,0 +1,35 @@
+# 行尾：以仓库内容为准
+* text=auto
+
+# ---- 二进制 ----
+*.exe    binary
+*.dll    binary
+*.pyd    binary
+*.lib    binary
+*.ico    binary
+*.png    binary
+*.jpg    binary
+*.gif    binary
+*.zip    binary
+*.7z     binary
+
+# ---- 源码统一 LF ----
+*.cs     text eol=lf
+*.py     text eol=lf
+*.md     text eol=lf
+*.yml    text eol=lf
+*.yaml   text eol=lf
+*.json   text eol=lf
+*.html   text eol=lf
+*.js     text eol=lf
+*.css    text eol=lf
+
+# ---- Windows 脚本 CRLF ----
+*.bat    text eol=crlf
+*.cmd    text eol=crlf
+*.ps1    text eol=crlf
+
+# ---- 二进制不进 diff ----
+*.exe    -diff
+*.ico    -diff
+*.dll    -diff
