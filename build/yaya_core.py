@@ -123,18 +123,44 @@ def _trim_container(flat: bytes) -> bytes:
     # MP4/MOV
     if n >= 8 and flat[4:8] == b"ftyp":
         off = 0
+        ok = True
         while off + 8 <= n:
             (size,) = struct.unpack(">I", flat[off:off + 4])
             typ = flat[off + 4:off + 8]
+
             if size == 0:
+                # 规范：最后一个 box，延伸到文件末尾
                 off = n
                 break
+
+            if size == 1:
+                # 规范：largesize，真实大小是后面 8 字节的 64 位大端整数
+                # （ffmpeg 在大 mdat 或 faststart 场景常用这种写法）
+                if off + 16 > n:
+                    ok = False
+                    break
+                (big,) = struct.unpack(">Q", flat[off + 8:off + 16])
+                if big < 16 or off + big > n:
+                    ok = False
+                    break
+                off += big
+                continue
+
             if size < 8 or off + size > n:
+                ok = False
                 break
             off += size
-        if 0 < off <= n:
+
+        if ok and 0 < off <= n:
+            # size==0 走到末尾时，画布尾部可能带 0 填充，需要裁掉
+            if off == n:
+                p = n - 1
+                while p >= 0 and flat[p] == 0:
+                    p -= 1
+                return flat[:p + 1]
             return flat[:off]
-        return flat
+        # 解析不了就别乱裁 —— 落到下面的兜底逻辑
+
     # PNG
     if n >= 8 and flat[:8] == b"\x89PNG\r\n\x1a\n":
         off = 8
